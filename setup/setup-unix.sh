@@ -22,6 +22,7 @@ haxelib install flixel-addons 3.2.0
 haxelib install tjson
 haxelib install hxjsonast
 haxelib install hxCodec 2.5.1
+haxelib install SScript
 haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
 haxelib git SScript https://github.com/AtonyGit/SScript-Old
 haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
