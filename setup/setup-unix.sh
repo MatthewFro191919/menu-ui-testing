@@ -24,7 +24,6 @@ haxelib install hxjsonast
 haxelib install hxCodec 2.5.1
 haxelib install SScript
 haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
-haxelib git SScript https://github.com/AtonyGit/SScript-Old
 haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
@@ -32,6 +31,7 @@ haxelib git faxe https://github.com/uhrobots/faxe
 haxelib git polymod https://github.com/larsiusprime/polymod.git
 haxelib install hxcpp-debug-server
 haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc.git
-haxelib git SScript https://github.com/AtonyGit/SScript-Old
 haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate
+haxelib remove SScript
+haxelib install SScript
 echo Finished!
