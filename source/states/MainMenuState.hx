@@ -44,48 +44,68 @@ class MainMenuState extends MusicBeatState
 		transOut = FlxTransitionableState.defaultTransOut;
 
 		persistentUpdate = persistentDraw = true;
+		var sky = new FlxSprite(-850, 1550);
+		sky.frames = Paths.getSparrowAtlas('god_bg');
+		sky.animation.addByPrefix('sky', "bg", 30);
+		sky.setGraphicSize(Std.int(sky.width * 0.8));
+		sky.animation.play('sky');
+		sky.scrollFactor.set(0.1, 0.1);
+		sky.antialiasing = true;
+		sky.updateHitbox();
+		sky.screenCenter(XY);
+		sky.y -= 100;
+		sky.x -= 50;
+		add(sky);
 
-		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		bg.antialiasing = ClientPrefs.data.antialiasing;
-		bg.scrollFactor.set(0, yScroll);
-		bg.setGraphicSize(Std.int(bg.width * 1.175));
-		bg.updateHitbox();
-		bg.screenCenter();
-		add(bg);
+		var bgcloud = new FlxSprite(-850, 1150);
+		bgcloud.frames = Paths.getSparrowAtlas('god_bg');
+		bgcloud.animation.addByPrefix('c', "cloud_smol", 30);
+		bgcloud.animation.play('c');
+		bgcloud.scrollFactor.set(0.3, 0.3);
+		bgcloud.antialiasing = true;
+		bgcloud.screenCenter(XY);
+		bgcloud.y += 250;
+		add(bgcloud);
 
-		camFollow = new FlxObject(0, 0, 1, 1);
-		add(camFollow);
+		var fgcloud = new FlxSprite(-1150, -500);
+		fgcloud.x -= 300;
+		fgcloud.frames = Paths.getSparrowAtlas('god_bg');
+		fgcloud.animation.addByPrefix('c', "cloud_big", 30);
+		fgcloud.animation.play('c');
+		fgcloud.scrollFactor.set(0.9, 0.9);
+		fgcloud.antialiasing = true;
+		fgcloud.screenCenter(XY);
+		fgcloud.y += 100;
+		add(fgcloud);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.antialiasing = ClientPrefs.data.antialiasing;
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
+		add(new MansionDebris(FlxG.width/2+300, FlxG.height/2+-800, 'norm', 0.4, 1, 0, 1));
+		add(new MansionDebris(FlxG.width/2+600, FlxG.height/2+-300, 'tiny', 0.4, 1.5, 0, 1));
+		add(new MansionDebris(FlxG.width/2+-150, FlxG.height/2+-400, 'spike', 0.4, 1.1, 0, 1));
+		add(new MansionDebris(FlxG.width/2+-750, FlxG.height/2+-850, 'small', 0.4, 1.5, 0, 1));
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
+
+		menuItems = new FlxTypedGroup<FlxSprite>();
+		add(menuItems);
+
+		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
+
 		for (i in 0...optionShit.length)
 		{
-			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
-			menuItem.antialiasing = ClientPrefs.data.antialiasing;
-			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
+			var menuItem:FlxSprite = new FlxSprite(0, 120 + (i * 220));
+			menuItem.frames = tex;
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
-			menuItems.add(menuItem);
-			var scr:Float = (optionShit.length - 4) * 0.135;
-			if (optionShit.length < 6)
-				scr = 0;
-			menuItem.scrollFactor.set(0, scr);
-			menuItem.updateHitbox();
+			menuItem.ID = i;
 			menuItem.screenCenter(X);
+			menuItems.add(menuItem);
+			menuItem.scrollFactor.set();
+			menuItem.updateHitbox();
+			menuItem.antialiasing = true;
+			menuItem.x -= 400;
 		}
 
 		var ekVer:FlxText = new FlxText(12, FlxG.height - 64, 0, "Extra Keys v" + extraKeysVersion, 12);
