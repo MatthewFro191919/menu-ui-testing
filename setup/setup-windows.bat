@@ -7,6 +7,9 @@ echo This might take a few moments depending on your internet speed.
 haxelib install hxcpp > nul
 haxelib install lime 8.0.0
 haxelib install openfl
+haxelib install hxdiscord_rpc
+haxelib install linc_luajit
+haxelib install json2object
 haxelib install flixel 4.11.0
 haxelib run lime setup flixel
 haxelib run lime setup         
