@@ -13,15 +13,12 @@ class MainMenuState extends MusicBeatState
 	public static var extraKeysVersion:String = '0.4.9'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
+	var character:Character;
+
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	var optionShit:Array<String> = [
 		'story_mode',
-		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
-		'credits',
-		#if !switch 'donate', #end
 		'options'
 	];
 
@@ -122,6 +119,14 @@ class MainMenuState extends MusicBeatState
 		add(fnfVer);
 		changeItem();
 
+		character = new Character(0,0,'menushaggy',false);
+		character.screenCenter(XY);
+		character.x += 290;
+		character.y += 25;
+		character.scrollFactor.set(.075,.075);
+		character.playAnim("back");
+		add(character);
+
 		#if ACHIEVEMENTS_ALLOWED
 		// Unlocks "Freaky on a Friday Night" achievement if it's a Friday and between 18:00 PM and 23:59 PM
 		var leDate = Date.now();
@@ -183,7 +188,35 @@ class MainMenuState extends MusicBeatState
 						switch (optionShit[curSelected])
 						{
 							case 'story_mode':
-								MusicBeatState.switchState(new StoryMenuState());
+				else if(optionShit[curSelected]=='story mode'){
+					selectedSomethin=true;
+					FlxG.sound.music.fadeOut(.5,0);
+					character.playAnim("snap",true);
+					new FlxTimer().start(0.85, function(tmr:FlxTimer)
+					{
+						FlxG.sound.play(Paths.sound('snap'));
+						FlxG.sound.play(Paths.sound('menuBad'));
+						FlxG.camera.shake(.05,.5);
+						new FlxTimer().start(0.06, function(tmr2:FlxTimer){
+							character.playAnim('snapped', true);
+						});
+					});
+
+					PlayState.storyPlaylist = ["god-eater"];
+					PlayState.isStoryMode = true;
+
+					PlayState.storyDifficulty = 2;
+
+					PlayState.SONG = Song.loadFromJson("god-eater-hard", "god-eater");
+					PlayState.storyWeek = 1;
+					PlayState.skipIntro=false;
+					PlayState.campaignScore = 0;
+					new FlxTimer().start(3, function(tmr:FlxTimer)
+					{
+						LoadingState.loadAndSwitchState(new PlayState(), true);
+					});
+				}
+				else {MusicBeatState.switchState(new StoryMenuState());}
 							case 'freeplay':
 								MusicBeatState.switchState(new FreeplayState());
 
